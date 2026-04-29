@@ -17,23 +17,23 @@ interface ButtonProps {
 const CalculatorButton = ({ label, subLabel, type, onClick, className = '', isSmall = false }: ButtonProps) => {
   const getColors = () => {
     switch (type) {
-      case 'action': return 'bg-orange-500 text-white font-bold border-orange-700 active:bg-orange-600';
-      case 'operator': return 'bg-neutral-100 text-neutral-800 font-bold border-neutral-300 active:bg-neutral-200';
-      case 'function': return 'bg-[#3b3c3d] text-white text-[10px] sm:text-xs pt-0.5 border-neutral-900 active:bg-neutral-700';
-      case 'number': return 'bg-white text-neutral-800 font-bold border-neutral-300 active:bg-neutral-50';
-      case 'top-control': return 'bg-[#5b5d63] text-white border-neutral-700 shadow-sm';
-      default: return 'bg-white text-neutral-800 border-neutral-300';
+      case 'action': return 'bg-orange-500 text-white font-bold border-orange-700 active:bg-orange-600 shadow-[0_4px_0_rgb(194,65,12)]';
+      case 'operator': return 'bg-neutral-800 text-neutral-100 font-bold border-neutral-900 active:bg-neutral-700 shadow-[0_4px_0_rgb(23,23,23)]';
+      case 'function': return 'bg-[#1e1e1e] text-[#f1c40f] text-[10px] sm:text-xs pt-0.5 border-neutral-950 active:bg-neutral-900 shadow-[0_4px_0_rgb(10,10,10)]';
+      case 'number': return 'bg-[#3d3d3d] text-white font-bold border-neutral-900 active:bg-neutral-800 shadow-[0_4px_0_rgb(23,23,23)]';
+      case 'top-control': return 'bg-neutral-700 text-white border-neutral-800 shadow-md';
+      default: return 'bg-neutral-800 text-white border-neutral-900';
     }
   };
 
   const getSubLabelStyle = (label?: string | JSX.Element) => {
-    if (!label || typeof label !== 'string') return 'text-amber-500';
+    if (!label || typeof label !== 'string') return 'text-amber-400';
     // Red/Rose for ALPHA items and variables
-    if (label.match(/^[ABCDEFXYM]/) || label.includes('sin⁻¹') || label.includes('cos⁻¹') || label.includes('tan⁻¹') || label.includes(':')) return 'text-rose-600 font-bold';
+    if (label.match(/^[ABCDEFXYM]/) || label.includes('sin⁻¹') || label.includes('cos⁻¹') || label.includes('tan⁻¹') || label.includes(':')) return 'text-rose-500 font-bold';
     // Green/Teal for System labels
-    if (label.match(/^(MATRIX|VECTOR|VERIFY|STAT|CMPLX|BASE|CONST|CONV|CLR)/)) return 'text-emerald-700 font-bold';
+    if (label.match(/^(MATRIX|VECTOR|VERIFY|STAT|CMPLX|BASE|CONST|CONV|CLR)/)) return 'text-emerald-400 font-bold';
     // Amber/Yellow for SHIFT items
-    return 'text-amber-500 font-bold';
+    return 'text-amber-400 font-bold';
   };
 
   return (
@@ -150,15 +150,15 @@ export default function App() {
   return (
     <div className="calc-container scale-[0.85] sm:scale-100">
       <div className="calc-side-wrap" />
-      <div className="max-w-[360px] sm:max-w-[420px] w-full bg-calc-body p-4 sm:p-7 pt-5 rounded-[3rem] shadow-2xl flex flex-col gap-2 relative overflow-hidden border-t-2 border-white/40">
+      <div className="max-w-[360px] sm:max-w-[420px] w-full bg-calc-body p-4 sm:p-7 pt-5 rounded-[3rem] shadow-2xl flex flex-col gap-2 relative overflow-hidden border-t-2 border-white/10">
         {/* Subtle noise/texture */}
-        <div className="absolute inset-0 opacity-[0.05] pointer-events-none rounded-[2.5rem] bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]" />
+        <div className="absolute inset-0 opacity-[0.1] pointer-events-none rounded-[2.5rem] bg-[url('https://www.transparenttextures.com/patterns/dark-matter.png')]" />
 
         {/* Top Header Branding & Solar Panel */}
         <div className="flex justify-between items-start px-1 relative z-10">
           <div className="flex flex-col">
-            <h1 className="text-neutral-800 font-serif italic font-black text-xl sm:text-2xl leading-none">Ex-99iES PLUS</h1>
-            <span className="text-[7px] sm:text-[9px] font-bold text-neutral-500 uppercase tracking-[0.2em] mt-1">SCIENTIFIC CALCULATOR</span>
+            <h1 className="text-zinc-100 font-serif italic font-black text-2xl sm:text-3xl leading-none tracking-tight drop-shadow-md">Next-Gen(NS)</h1>
+            <span className="text-[7px] sm:text-[9px] font-black text-zinc-400 uppercase tracking-[0.25em] mt-1">SCIENTIFIC CALCULATOR</span>
           </div>
           
           <div className="w-24 h-9 sm:w-32 sm:h-11 bg-neutral-900 rounded-sm border-2 border-neutral-400/50 shadow-inner flex overflow-hidden p-0.5 ml-auto">
@@ -200,44 +200,44 @@ export default function App() {
           {/* Left Buttons */}
           <div className="flex gap-2 items-end pb-1">
             <div className="flex flex-col items-center">
-              <span className="text-[8px] sm:text-[10px] font-black text-amber-500 uppercase mb-1">Shift</span>
+              <span className="text-[8px] sm:text-[10px] font-black text-amber-400 uppercase mb-1 drop-shadow-sm">Shift</span>
               <button 
                 onClick={() => { setIsShift(!isShift); setIsAlpha(false); }} 
-                className={`w-10 h-6 sm:w-16 sm:h-9 rounded-full shadow-lg border-b-[3px] border-neutral-700 transition-all ${isShift ? 'bg-amber-400' : 'bg-[#5b5d63]'} active:translate-y-1`} 
+                className={`w-10 h-6 sm:w-16 sm:h-9 rounded-full shadow-lg border-b-[3px] border-neutral-900 transition-all ${isShift ? 'bg-amber-400' : 'bg-neutral-600'} active:translate-y-1`} 
               />
             </div>
             <div className="flex flex-col items-center">
-              <span className="text-[8px] sm:text-[10px] font-black text-rose-600 uppercase mb-1">Alpha</span>
+              <span className="text-[8px] sm:text-[10px] font-black text-rose-500 uppercase mb-1 drop-shadow-sm">Alpha</span>
               <button 
                 onClick={() => { setIsAlpha(!isAlpha); setIsShift(false); }} 
-                className={`w-10 h-6 sm:w-16 sm:h-9 rounded-full shadow-lg border-b-[3px] border-neutral-700 transition-all ${isAlpha ? 'bg-rose-500' : 'bg-[#5b5d63]'} active:translate-y-1`} 
+                className={`w-10 h-6 sm:w-16 sm:h-9 rounded-full shadow-lg border-b-[3px] border-neutral-900 transition-all ${isAlpha ? 'bg-rose-500' : 'bg-neutral-600'} active:translate-y-1`} 
               />
             </div>
           </div>
 
           {/* Center Replay Pad */}
           <div className="absolute left-1/2 -translate-x-1/2 bottom-0 z-30 translate-y-7">
-            <div className="relative w-24 h-24 sm:w-32 sm:h-32 bg-neutral-300 rounded-full shadow-2xl border-[3px] border-neutral-400 flex items-center justify-center ring-1 ring-neutral-200">
-               <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-black/10 rounded-full" />
-               <button className="absolute top-2 hover:bg-black/5 rounded-full p-0.5 active:scale-95"><ChevronUp size={22} strokeWidth={3} className="text-neutral-600" /></button>
-               <button className="absolute bottom-2 hover:bg-black/5 rounded-full p-0.5 active:scale-95"><ChevronDown size={22} strokeWidth={3} className="text-neutral-600" /></button>
-               <button className="absolute left-2 hover:bg-black/5 rounded-full p-0.5 active:scale-95"><ChevronLeft size={22} strokeWidth={3} className="text-neutral-600" /></button>
-               <button className="absolute right-2 hover:bg-black/5 rounded-full p-0.5 active:scale-95"><ChevronRight size={22} strokeWidth={3} className="text-neutral-600" /></button>
-               <div className="bg-neutral-100 w-16 h-16 sm:w-20 sm:h-20 rounded-full border-2 border-neutral-200 flex items-center justify-center text-[10px] font-black text-neutral-400/80 italic tracking-widest shadow-inner select-none pointer-events-none uppercase">Replay</div>
+            <div className="relative w-24 h-24 sm:w-32 sm:h-32 bg-neutral-800 rounded-full shadow-2xl border-[3px] border-neutral-950 flex items-center justify-center ring-1 ring-white/5">
+               <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-black/30 rounded-full" />
+               <button className="absolute top-2 hover:bg-white/10 rounded-full p-0.5 active:scale-95"><ChevronUp size={22} strokeWidth={3} className="text-neutral-400" /></button>
+               <button className="absolute bottom-2 hover:bg-white/10 rounded-full p-0.5 active:scale-95"><ChevronDown size={22} strokeWidth={3} className="text-neutral-400" /></button>
+               <button className="absolute left-2 hover:bg-white/10 rounded-full p-0.5 active:scale-95"><ChevronLeft size={22} strokeWidth={3} className="text-neutral-400" /></button>
+               <button className="absolute right-2 hover:bg-white/10 rounded-full p-0.5 active:scale-95"><ChevronRight size={22} strokeWidth={3} className="text-neutral-400" /></button>
+               <div className="bg-neutral-900 w-16 h-16 sm:w-20 sm:h-20 rounded-full border-2 border-neutral-800 flex items-center justify-center text-[10px] font-black text-neutral-500/80 italic tracking-widest shadow-inner select-none pointer-events-none uppercase">Replay</div>
             </div>
           </div>
 
           {/* Right Buttons */}
           <div className="flex gap-2 items-end pb-1">
             <div className="flex flex-col items-center">
-              <span className="text-[8px] sm:text-[10px] font-black uppercase text-neutral-700 mb-1 leading-none text-center">
-                Mode <span className="text-amber-600 italic">Setup</span>
+              <span className="text-[8px] sm:text-[10px] font-black uppercase text-zinc-300 mb-1 leading-none text-center drop-shadow-sm">
+                Mode <span className="text-amber-500 italic">Setup</span>
               </span>
-              <button className="w-10 h-6 sm:w-16 sm:h-9 rounded-full bg-[#5b5d63] border-b-[3px] border-neutral-800 shadow-lg" />
+              <button className="w-10 h-6 sm:w-16 sm:h-9 rounded-full bg-neutral-600 border-b-[3px] border-neutral-900 shadow-lg" />
             </div>
             <div className="flex flex-col items-center">
-              <span className="text-[8px] sm:text-[10px] font-black uppercase text-neutral-700 mb-1 leading-none">On</span>
-              <button onClick={handleClear} className="w-10 h-6 sm:w-16 sm:h-9 rounded-full bg-[#5b5d63] border-b-[3px] border-neutral-800 shadow-lg" />
+              <span className="text-[8px] sm:text-[10px] font-black uppercase text-zinc-300 mb-1 leading-none drop-shadow-sm">On</span>
+              <button onClick={handleClear} className="w-10 h-6 sm:w-16 sm:h-9 rounded-full bg-neutral-600 border-b-[3px] border-neutral-900 shadow-lg" />
             </div>
           </div>
         </div>
