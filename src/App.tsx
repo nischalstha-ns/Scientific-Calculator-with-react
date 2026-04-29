@@ -179,8 +179,13 @@ export default function App() {
           </div>
 
         <div className="flex flex-col items-end gap-0.5 mt-auto overflow-hidden">
-            <div className="w-full text-xl sm:text-2xl text-left truncate leading-tight min-h-[1.2em] italic font-digital">
-              {display || ''}
+            <div className="w-full text-xl sm:text-2xl text-left truncate leading-tight min-h-[1.2em] italic font-digital flex items-center">
+              <span>{display || ''}</span>
+              <motion.span
+                animate={{ opacity: [1, 0] }}
+                transition={{ duration: 0.8, repeat: Infinity, ease: "steps(2)" }}
+                className="w-[2px] h-[0.8em] bg-calc-screen-ink ml-0.5"
+              />
             </div>
             <div className="text-5xl sm:text-7xl font-black leading-none mt-1 truncate max-w-full font-digital text-right w-full">
               {result !== null ? result : (display ? '' : '0')}
