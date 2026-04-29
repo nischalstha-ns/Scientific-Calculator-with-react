@@ -1,38 +1,88 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&family=JetBrains+Mono:wght@400;700&family=VT323&family=Playfair+Display:ital,wght@1,900&display=swap');
 @import "tailwindcss";
 
+:root {
+  --calc-body: #2d3436;
+  --calc-side: #1e272e;
+  --calc-screen-bg: #9ea894;
+  --calc-screen-ink: #000000;
+  --calc-btn-dark: #1e272e;
+  --calc-btn-light: #fdfdfd;
+  --calc-btn-accent: #e67e22;
+  --label-shift: #f1c40f;
+  --label-alpha: #e74c3c;
+  --brand-green: #2ecc71;
+  --calc-text-primary: #f4f4f5;
+  --calc-text-secondary: #a1a1aa;
+  --calc-btn-num: #3d3d3d;
+  --calc-btn-num-text: #ffffff;
+}
+
+.light-theme {
+  --calc-body: #d1d5db;
+  --calc-side: #94a3b8;
+  --calc-screen-bg: #c9d2c1;
+  --calc-screen-ink: #1e272e;
+  --calc-btn-dark: #3b3c3d;
+  --calc-btn-light: #fdfdfd;
+  --calc-btn-accent: #f97316;
+  --label-shift: #d97706;
+  --label-alpha: #e11d48;
+  --brand-green: #059669;
+  --calc-text-primary: #18181b;
+  --calc-text-secondary: #52525b;
+  --calc-btn-num: #ffffff;
+  --calc-btn-num-text: #18181b;
+}
+
 @theme {
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
   --font-serif: "Playfair Display", serif;
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
   --font-digital: "VT323", monospace;
 
-  --color-calc-body: #2d3436;
-  --color-calc-side: #1e272e;
-  --color-calc-screen-bg: #9ea894;
-  --color-calc-screen-ink: #000000;
-  --color-calc-btn-dark: #1e272e;
-  --color-calc-btn-light: #fdfdfd;
-  --color-calc-btn-accent: #e67e22;
-  --color-label-shift: #f1c40f;
-  --color-label-alpha: #e74c3c;
-  --color-brand-green: #2ecc71;
+  --color-calc-body: var(--calc-body);
+  --color-calc-side: var(--calc-side);
+  --color-calc-screen-bg: var(--calc-screen-bg);
+  --color-calc-screen-ink: var(--calc-screen-ink);
+  --color-calc-btn-dark: var(--calc-btn-dark);
+  --color-calc-btn-light: var(--calc-btn-light);
+  --color-calc-btn-accent: var(--calc-btn-accent);
+  --color-label-shift: var(--label-shift);
+  --color-label-alpha: var(--label-alpha);
+  --color-calc-text-primary: var(--calc-text-primary);
+  --color-calc-text-secondary: var(--calc-text-secondary);
+  --color-calc-btn-num: var(--calc-btn-num);
+  --color-calc-btn-num-text: var(--calc-btn-num-text);
 }
 
 @layer base {
   body {
-    @apply bg-zinc-900 text-neutral-100 min-h-screen flex items-center justify-center p-2 sm:p-4 font-sans overflow-hidden;
+    @apply transition-colors duration-500 bg-zinc-900 text-neutral-100 min-h-screen flex items-center justify-center p-2 sm:p-4 font-sans overflow-hidden;
     background-image: 
       radial-gradient(at 0% 0%, rgba(255, 255, 255, 0.03) 0, transparent 50%),
       url("https://www.transparenttextures.com/patterns/dark-leather.png");
   }
+
+  .light-theme body {
+    @apply bg-zinc-200 text-neutral-900;
+    background-image: 
+      radial-gradient(at 50% 50%, rgba(255, 255, 255, 0.4) 0, transparent 100%),
+      url("https://www.transparenttextures.com/patterns/wood-pattern.png");
+  }
 }
 
 .calc-container {
-  @apply relative;
+  @apply relative transition-shadow duration-500;
   box-shadow: 
     0 100px 200px -50px rgba(0, 0, 0, 0.8),
     0 50px 100px -60px rgba(0, 0, 0, 0.9);
+}
+
+.light-theme .calc-container {
+  box-shadow: 
+    0 70px 140px -40px rgba(0, 0, 0, 0.3),
+    0 30px 60px -30px rgba(0, 0, 0, 0.4);
 }
 
 .calc-side-wrap {

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import { motion } from 'motion/react';
-import { ChevronUp, ChevronDown, ChevronLeft, ChevronRight } from 'lucide-react';
+import { motion, AnimatePresence } from 'motion/react';
+import { ChevronUp, ChevronDown, ChevronLeft, ChevronRight, Sun, Moon } from 'lucide-react';
 
 // Types for button configuration
 type ButtonType = 'number' | 'operator' | 'function' | 'action' | 'special' | 'top-control';
@@ -17,23 +17,23 @@ interface ButtonProps {
 const CalculatorButton = ({ label, subLabel, type, onClick, className = '', isSmall = false }: ButtonProps) => {
   const getColors = () => {
     switch (type) {
-      case 'action': return 'bg-orange-500 text-white font-bold border-orange-700 active:bg-orange-600 shadow-[0_4px_0_rgb(194,65,12)]';
-      case 'operator': return 'bg-neutral-800 text-neutral-100 font-bold border-neutral-900 active:bg-neutral-700 shadow-[0_4px_0_rgb(23,23,23)]';
-      case 'function': return 'bg-[#1e1e1e] text-[#f1c40f] text-[10px] sm:text-xs pt-0.5 border-neutral-950 active:bg-neutral-900 shadow-[0_4px_0_rgb(10,10,10)]';
-      case 'number': return 'bg-[#3d3d3d] text-white font-bold border-neutral-900 active:bg-neutral-800 shadow-[0_4px_0_rgb(23,23,23)]';
-      case 'top-control': return 'bg-neutral-700 text-white border-neutral-800 shadow-md';
+      case 'action': return 'bg-calc-btn-accent text-white font-bold border-orange-800 active:bg-orange-600 shadow-[0_4px_0_rgba(0,0,0,0.5)]';
+      case 'operator': return 'bg-calc-btn-dark text-white font-bold border-neutral-950 active:bg-neutral-700 shadow-[0_4px_0_rgba(0,0,0,0.5)]';
+      case 'function': return 'bg-calc-btn-dark text-label-shift text-[10px] sm:text-xs pt-0.5 border-neutral-950 active:bg-neutral-900 shadow-[0_4px_0_rgba(0,0,0,0.5)]';
+      case 'number': return 'bg-calc-btn-num text-calc-btn-num-text font-bold border-neutral-950 active:opacity-90 shadow-[0_4px_0_rgba(0,0,0,0.5)]';
+      case 'top-control': return 'bg-neutral-600 text-white border-neutral-800 shadow-md';
       default: return 'bg-neutral-800 text-white border-neutral-900';
     }
   };
 
   const getSubLabelStyle = (label?: string | JSX.Element) => {
-    if (!label || typeof label !== 'string') return 'text-amber-400';
+    if (!label || typeof label !== 'string') return 'text-label-shift';
     // Red/Rose for ALPHA items and variables
-    if (label.match(/^[ABCDEFXYM]/) || label.includes('sin⁻¹') || label.includes('cos⁻¹') || label.includes('tan⁻¹') || label.includes(':')) return 'text-rose-500 font-bold';
+    if (label.match(/^[ABCDEFXYM]/) || label.includes('sin⁻¹') || label.includes('cos⁻¹') || label.includes('tan⁻¹') || label.includes(':')) return 'text-label-alpha font-bold';
     // Green/Teal for System labels
-    if (label.match(/^(MATRIX|VECTOR|VERIFY|STAT|CMPLX|BASE|CONST|CONV|CLR)/)) return 'text-emerald-400 font-bold';
+    if (label.match(/^(MATRIX|VECTOR|VERIFY|STAT|CMPLX|BASE|CONST|CONV|CLR)/)) return 'text-brand-green font-bold';
     // Amber/Yellow for SHIFT items
-    return 'text-amber-400 font-bold';
+    return 'text-label-shift font-bold';
   };
 
   return (
@@ -62,7 +62,15 @@ export default function App() {
   const [result, setResult] = useState<string | null>(null);
   const [isShift, setIsShift] = useState(false);
   const [isAlpha, setIsAlpha] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(true);
 
+  useEffect(() => {
+    if (!isDarkMode) {
+      document.documentElement.classList.add('light-theme');
+    } else {
+      document.documentElement.classList.remove('light-theme');
+    }
+  }, [isDarkMode]);
   useEffect(() => {
     // Initial display matches the user's image integral example
     setDisplay('∫(π,0)e^x sin(x)dx');
@@ -157,8 +165,39 @@ export default function App() {
         {/* Top Header Branding & Solar Panel */}
         <div className="flex justify-between items-start px-1 relative z-10">
           <div className="flex flex-col">
-            <h1 className="text-zinc-100 font-serif italic font-black text-2xl sm:text-3xl leading-none tracking-tight drop-shadow-md">Next-Gen(NS)</h1>
-            <span className="text-[7px] sm:text-[9px] font-black text-zinc-400 uppercase tracking-[0.25em] mt-1">SCIENTIFIC CALCULATOR</span>
+            <h1 className="text-calc-text-primary font-serif italic font-black text-2xl sm:text-3xl leading-none tracking-tight drop-shadow-md transition-colors duration-500" style={{ color: 'var(--calc-text-primary)' }}>Next-Gen(NS)</h1>
+            <div className="flex items-center gap-3 mt-1">
+              <span className="text-[7px] sm:text-[9px] font-black text-calc-text-secondary uppercase tracking-[0.25em] transition-colors duration-500" style={{ color: 'var(--calc-text-secondary)' }}>SCIENTIFIC CALCULATOR</span>
+              
+              {/* Theme Toggle */}
+              <button 
+                onClick={() => setIsDarkMode(!isDarkMode)}
+                className="flex items-center justify-center p-1 rounded-full bg-neutral-800/10 hover:bg-neutral-800/20 dark:bg-white/5 dark:hover:bg-white/10 transition-all active:scale-90 border border-black/5 dark:border-white/5"
+                title={isDarkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}
+              >
+                <AnimatePresence mode="wait">
+                  {isDarkMode ? (
+                    <motion.div
+                      key="moon"
+                      initial={{ scale: 0, rotate: -90 }}
+                      animate={{ scale: 1, rotate: 0 }}
+                      exit={{ scale: 0, rotate: 90 }}
+                    >
+                      <Moon size={10} className="text-zinc-400" />
+                    </motion.div>
+                  ) : (
+                    <motion.div
+                      key="sun"
+                      initial={{ scale: 0, rotate: -90 }}
+                      animate={{ scale: 1, rotate: 0 }}
+                      exit={{ scale: 0, rotate: 90 }}
+                    >
+                      <Sun size={10} className="text-zinc-600" />
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </button>
+            </div>
           </div>
           
           <div className="w-24 h-9 sm:w-32 sm:h-11 bg-neutral-900 rounded-sm border-2 border-neutral-400/50 shadow-inner flex overflow-hidden p-0.5 ml-auto">
